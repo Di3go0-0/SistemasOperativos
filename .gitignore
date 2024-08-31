@@ -1,0 +1,39 @@
+# Ignore build output
+bin/
+obj/
+
+# Ignore NuGet packages
+*.nupkg
+packages/
+
+# Ignore Visual Studio files
+*.suo
+*.user
+*.sln.docstates
+*.vs/
+
+# Ignore ReSharper files
+_ReSharper*/
+
+# Ignore build artifacts
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+*.bak
+*.swp
+*.tmp
+*.zip
+*.rar
+*.7z
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.lzma
+*.tar.lzo
+*.tar.zst
+*.tar.lrz
+*.tar.lz4
+*.tar.lz
+*.tar

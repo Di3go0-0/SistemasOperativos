@@ -1,0 +1,27 @@
+[
+    {
+        "Proceso": "A",
+        "Rafaga" : 3,
+        "Llegada": 0
+    },
+    {
+        "Proceso": "B",
+        "Rafaga" : 2,
+        "Llegada": 1
+    },
+    {
+        "Proceso": "C",
+        "Rafaga" : 1,
+        "Llegada": 2
+    },
+    {
+        "Proceso": "D",
+        "Rafaga" : 4,
+        "Llegada": 3
+    },
+    {
+        "Proceso": "E",
+        "Rafaga" : 5,
+        "Llegada": 4
+    }
+]
