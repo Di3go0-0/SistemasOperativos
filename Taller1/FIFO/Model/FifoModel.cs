@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace FIFO.Model
+namespace Taller1.FIFO.Model
 {
     public class FifoModel
     {
-        private string Proceso { get; set; }
-        private int Rafaga { get; set; }
-        private int Llegada { get; set; }
+        public string Proceso { get; set; }
+        public int Rafaga { get; set; }
+        public int Llegada { get; set; }
+
         public FifoModel(string proceso, int rafaga, int llegada)
         {
             Proceso = proceso;
