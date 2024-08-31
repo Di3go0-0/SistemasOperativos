@@ -21,6 +21,10 @@ namespace SO
             {
                 Console.WriteLine($"Proceso: {proceso.Proceso}, Rafaga: {proceso.Rafaga}, Llegada: {proceso.Llegada}");
             }
+            Console.WriteLine("Procesos ejecutados");
+            fifo.PrintModels();
+            Console.WriteLine("Tiempos");
+            fifo.PrintTiempos();
         }
     }
 }
