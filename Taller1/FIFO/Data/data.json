@@ -23,5 +23,30 @@
         "Proceso": "E",
         "Rafaga" : 5,
         "Llegada": 4
+    },
+    {
+        "Proceso": "F",
+        "Rafaga" : 6,
+        "Llegada": 5
+    },
+    {
+        "Proceso": "G",
+        "Rafaga" : 7,
+        "Llegada": 6
+    },
+    {
+        "Proceso": "H",
+        "Rafaga" : 8,
+        "Llegada": 7
+    },
+    {
+        "Proceso": "I",
+        "Rafaga" : 9,
+        "Llegada": 8
+    },
+    {
+        "Proceso": "J",
+        "Rafaga" : 10,
+        "Llegada": 9
     }
 ]
