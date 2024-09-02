@@ -2,56 +2,67 @@
     {
         "Proceso": "A",
         "Rafaga" : 3,
-        "Llegada": 0
+        "Llegada": 0,
+        "Prioridad": 1
     },
     {
         "Proceso": "B",
         "Rafaga" : 2,
-        "Llegada": 1
+        "Llegada": 1,
+        "Prioridad": 2
     },
     {
         "Proceso": "C",
         "Rafaga" : 1,
-        "Llegada": 2
+        "Llegada": 2,
+        "Prioridad": 3
     },
     {
         "Proceso": "D",
         "Rafaga" : 4,
-        "Llegada": 4
+        "Llegada": 4,
+        "Prioridad": 1
     },
     {
         "Proceso": "E",
         "Rafaga" : 5,
-        "Llegada": 5
+        "Llegada": 5,
+        "Prioridad": 2
     },
     {
         "Proceso": "F",
         "Rafaga" : 6,
-        "Llegada": 6
+        "Llegada": 6,
+        "Prioridad": 1
     },
     {
         "Proceso": "G",
         "Rafaga" : 7,
-        "Llegada": 6
+        "Llegada": 6,
+        "Prioridad": 2
     },
     {
         "Proceso": "H",
         "Rafaga" : 8,
-        "Llegada": 7
+        "Llegada": 7,
+        "Prioridad": 1
     },
     {
         "Proceso": "I",
         "Rafaga" : 9,
-        "Llegada": 8
+        "Llegada": 8,
+        "Prioridad": 2
     },
     {
         "Proceso": "J",
         "Rafaga" : 10,
-        "Llegada": 9
+        "Llegada": 9,
+        "Prioridad": 1
     },
     {
         "Proceso": "K",
         "Rafaga" : 11,
-        "Llegada": 10
+        "Llegada": 10,
+        "Prioridad": 2
     }
 ]

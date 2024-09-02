@@ -28,7 +28,7 @@ namespace Taller1.Helpers
             if (SelectedAlgorithm != AlgorithmType.Fifo)
                 throw new InvalidOperationException("Selected algorithm is not FIFO");
 
-            string jsonData = File.ReadAllText("FIFO/Data/data.json");
+            string jsonData = File.ReadAllText("Data/data.json");
             return JsonConvert.DeserializeObject<List<FifoModel>>(jsonData) ?? new List<FifoModel>();
         }
     }
