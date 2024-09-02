@@ -33,30 +33,27 @@ namespace Taller1.FIFO
 
         public void Run()
         {
-            foreach (var proceso in Procesos)
+            // Ordenamos los procesos por el tiempo de llegada
+            var procesosOrdenados = Procesos.OrderBy(p => p.Llegada).ToList();
+
+            foreach (var proceso in procesosOrdenados)
             {
-                if (proceso.Llegada <= Tiempo && !proceso.Ejecutado)
+                // Si el proceso aún no ha llegado, el tiempo debe avanzar hasta su llegada
+                if (Tiempo < proceso.Llegada)
                 {
-                    proceso.Comienzo = Tiempo;
-                    proceso.Finalizacion = Tiempo + proceso.Rafaga;
-                    proceso.Ejecutado = true;
-                    Tiempo += proceso.Rafaga;
+                    Tiempo = proceso.Llegada;
                 }
-                else if (!proceso.Ejecutado)
-                {
-                    Tiempo++;
-                }
+
+                // Una vez que el proceso puede empezar, actualizamos sus tiempos
+                proceso.Comienzo = Tiempo;
+                proceso.Finalizacion = Tiempo + proceso.Rafaga;
+                proceso.Ejecutado = true;
+
+                // Avanzamos el tiempo según la ráfaga del proceso
+                Tiempo += proceso.Rafaga;
             }
         }
 
-        public void PrintModels()
-        {
-            Run();
-            foreach (var proceso in Procesos)
-            {
-                System.Console.WriteLine($"Proceso: {proceso.Proceso}, Rafaga: {proceso.Rafaga}, Llegada: {proceso.Llegada}, Comienzo: {proceso.Comienzo}, Finalizacion: {proceso.Finalizacion}");
-            }
-        }
 
         private void CalcularTiempos()
         {
@@ -67,6 +64,11 @@ namespace Taller1.FIFO
             }
             PromedioTiempoEspera = Procesos.Average(proceso => proceso.TiempoEspera);
             PromedioTiempoSistema = Procesos.Average(proceso => proceso.TiempoSistema);
+        }
+        public PlotModel GeneratePlotModel()
+        {
+            var plotModelGenerator = new PlotModelGenerator();
+            return plotModelGenerator.CreatePlotModel(Procesos, Tiempo);
         }
 
         public void PrintTiempos()
@@ -80,10 +82,5 @@ namespace Taller1.FIFO
             System.Console.WriteLine($"Promedio de tiempo de sistema: {PromedioTiempoSistema:F2}");
         }
 
-        public PlotModel GeneratePlotModel()
-        {
-            var plotModelGenerator = new PlotModelGenerator();
-            return plotModelGenerator.CreatePlotModel(Procesos, Tiempo);
-        }
     }
 }
