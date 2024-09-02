@@ -2,12 +2,13 @@ using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Collections.Generic;
+using Taller1.Model;
 
 namespace Taller1.FIFO.Model
 {
     public class PlotModelGenerator
     {
-        public PlotModel CreatePlotModel(List<FifoModel> fifoData, int tiempoTotal)
+        public PlotModel CreatePlotModel(List<ProcessModel> fifoData, int tiempoTotal)
         {
             var plotModel = new PlotModel { Title = "FIFO Process Execution", Background = OxyColors.White };
 

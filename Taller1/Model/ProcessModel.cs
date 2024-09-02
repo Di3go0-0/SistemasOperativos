@@ -2,7 +2,7 @@ namespace Taller1.Model
 {
     public class ProcessModel
     {
-        public string Proceso { get; set; }
+        public string Proceso { get; set; } = "";
         public int Rafaga { get; set; }
         public int Llegada { get; set; }
         public int Prioridad { get; set; }
@@ -12,13 +12,17 @@ namespace Taller1.Model
         public int TiempoEspera { get; set; }
         public int TiempoSistema { get; set; }
 
+        public ProcessModel()
+        {
+        }
         public ProcessModel(string proceso, int rafaga, int llegada)
         {
             Proceso = proceso;
             Rafaga = rafaga;
             Llegada = llegada;
         }
-        public ProcessModel(string proceso, int rafaga, int llegada, int prioridad){
+        public ProcessModel(string proceso, int rafaga, int llegada, int prioridad)
+        {
             Proceso = proceso;
             Rafaga = rafaga;
             Llegada = llegada;

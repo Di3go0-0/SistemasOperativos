@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Taller1.FIFO.Model;
+using Taller1.Model;
 using OxyPlot;
 
 
@@ -7,17 +8,18 @@ namespace Taller1.FIFO
 {
     public class FIFO
     {
-        private List<FifoModel> Procesos { get; set; } = new List<FifoModel>();
+        // private List<FifoModel> Procesos { get; set; } = new List<FifoModel>();
+        private List<ProcessModel> Procesos { get; set; } = [];
         private int Tiempo { get; set; } = 0;
         private double PromedioTiempoEspera { get; set; } = 0;
         private double PromedioTiempoSistema { get; set; } = 0;
 
         public void AddProceso(string proceso, int rafaga, int llegada)
         {
-            Procesos.Add(new FifoModel(proceso, rafaga, llegada));
+            Procesos.Add(new ProcessModel(proceso, rafaga, llegada));
         }
 
-        public void LoadProcesos(List<FifoModel> procesos)
+        public void LoadProcesos(List<ProcessModel> procesos)
         {
             foreach (var proceso in procesos)
             {
@@ -25,14 +27,14 @@ namespace Taller1.FIFO
             }
         }
 
-        public List<FifoModel> GetProcesos()
+        public List<ProcessModel> GetProcesos()
         {
             return Procesos;
         }
 
         public void Run()
         {
-            foreach (FifoModel proceso in Procesos)
+            foreach (ProcessModel proceso in Procesos)
             {
                 if (proceso.Llegada <= Tiempo && !proceso.Ejecutado)
                 {
@@ -50,7 +52,7 @@ namespace Taller1.FIFO
         public void PrintModels()
         {
             this.Run();
-            foreach (FifoModel proceso in Procesos)
+            foreach (ProcessModel proceso in Procesos)
             {
                 System.Console.WriteLine($"Proceso: {proceso.Proceso}, Rafaga: {proceso.Rafaga}, Llegada: {proceso.Llegada}, Comienzo: {proceso.Comienzo}, Finalizacion: {proceso.Finalizacion}");
             }
@@ -58,7 +60,7 @@ namespace Taller1.FIFO
 
         public void Tiempos()
         {
-            foreach (FifoModel proceso in Procesos)
+            foreach (ProcessModel proceso in Procesos)
             {
                 proceso.TiempoEspera = proceso.Comienzo - proceso.Llegada;
                 proceso.TiempoSistema = proceso.Finalizacion - proceso.Llegada;
@@ -70,7 +72,7 @@ namespace Taller1.FIFO
         public void PrintTiempos()
         {
             this.Tiempos();
-            foreach (FifoModel proceso in Procesos)
+            foreach (ProcessModel proceso in Procesos)
             {
                 System.Console.WriteLine($"Proceso: {proceso.Proceso}, Tiempo de espera: {proceso.TiempoEspera}, Tiempo de sistema: {proceso.TiempoSistema}");
             }

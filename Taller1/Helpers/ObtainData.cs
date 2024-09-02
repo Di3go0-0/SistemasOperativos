@@ -2,13 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Taller1.FIFO.Model;
+using Taller1.Model;
 
 namespace Taller1.Helpers
 {
     public enum AlgorithmType
     {
-        None,
         Fifo,
         Sjf,
         Prioridad
@@ -23,13 +22,13 @@ namespace Taller1.Helpers
             SelectedAlgorithm = algorithmType;
         }
 
-        public List<FifoModel> GetFifoData()
+        public List<ProcessModel> GetFifoData()
         {
             if (SelectedAlgorithm != AlgorithmType.Fifo)
                 throw new InvalidOperationException("Selected algorithm is not FIFO");
 
             string jsonData = File.ReadAllText("Data/data.json");
-            return JsonConvert.DeserializeObject<List<FifoModel>>(jsonData) ?? new List<FifoModel>();
+            return JsonConvert.DeserializeObject<List<ProcessModel>>(jsonData) ?? new List<ProcessModel>();
         }
     }
 }

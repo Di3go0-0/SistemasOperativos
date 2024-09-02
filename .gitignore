@@ -2,6 +2,9 @@
 bin/
 obj/
 
+#Ignore Images
+*.png
+
 # Ignore NuGet packages
 *.nupkg
 packages/
