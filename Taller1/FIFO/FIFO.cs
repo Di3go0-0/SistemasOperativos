@@ -75,5 +75,6 @@ namespace Taller1.FIFO
             System.Console.WriteLine($"Promedio de tiempo de espera: {PromedioTiempoEspera:F2}");
             System.Console.WriteLine($"Promedio de tiempo de sistema: {PromedioTiempoSistema:F2}");
         }
+        
     }
 }

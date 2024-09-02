@@ -2,32 +2,32 @@
     {
         "Proceso": "A",
         "Rafaga" : 3,
-        "Llegada": 0
+        "Llegada": 1
     },
     {
         "Proceso": "B",
         "Rafaga" : 2,
-        "Llegada": 1
+        "Llegada": 2
     },
     {
         "Proceso": "C",
         "Rafaga" : 1,
-        "Llegada": 2
+        "Llegada": 3
     },
     {
         "Proceso": "D",
         "Rafaga" : 4,
-        "Llegada": 3
+        "Llegada": 4
     },
     {
         "Proceso": "E",
         "Rafaga" : 5,
-        "Llegada": 4
+        "Llegada": 5
     },
     {
         "Proceso": "F",
         "Rafaga" : 6,
-        "Llegada": 5
+        "Llegada": 6
     },
     {
         "Proceso": "G",

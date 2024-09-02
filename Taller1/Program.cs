@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Taller1.Helpers;
 using Taller1.FIFO;
 using Taller1.FIFO.Model;
+using OxyPlot;
+// using OxyPlot.SkiaSharp;
+
 
 namespace SO
 {
@@ -17,7 +20,7 @@ namespace SO
             fifo.LoadProcesos(fifoData);
 
             // Mostrar por consola los datos de cada FifoModel
-            foreach (var proceso in fifo.GetProcesos())
+        foreach (var proceso in fifo.GetProcesos())
             {
                 Console.WriteLine($"Proceso: {proceso.Proceso}, Rafaga: {proceso.Rafaga}, Llegada: {proceso.Llegada}");
             }
@@ -25,6 +28,18 @@ namespace SO
             fifo.PrintModels();
             Console.WriteLine("Tiempos");
             fifo.PrintTiempos();
+
+            // Crear y guardar la gráfica
+            // var plotModelGenerator = new PlotModelGenerator();
+            // var plotModel = plotModelGenerator.CreatePlotModel(fifoData);
+
+            // using (var stream = File.Create("fifo_plot.png"))
+            // {
+            //     var pngExporter = new PngExporter { Width = 600, Height = 400 };
+            //     pngExporter.Export(plotModel, stream);
+            // }
+
+            Console.WriteLine("Gráfica generada y guardada como fifo_plot.png");
         }
     }
 }
