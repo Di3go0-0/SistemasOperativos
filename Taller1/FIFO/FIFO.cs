@@ -1,15 +1,14 @@
 using System.Collections.Generic;
+using System.Linq;
 using Taller1.FIFO.Model;
 using Taller1.Model;
 using OxyPlot;
-
 
 namespace Taller1.FIFO
 {
     public class FIFO
     {
-        // private List<FifoModel> Procesos { get; set; } = new List<FifoModel>();
-        private List<ProcessModel> Procesos { get; set; } = [];
+        private List<ProcessModel> Procesos { get; set; } = new List<ProcessModel>();
         private int Tiempo { get; set; } = 0;
         private double PromedioTiempoEspera { get; set; } = 0;
         private double PromedioTiempoSistema { get; set; } = 0;
@@ -34,7 +33,7 @@ namespace Taller1.FIFO
 
         public void Run()
         {
-            foreach (ProcessModel proceso in Procesos)
+            foreach (var proceso in Procesos)
             {
                 if (proceso.Llegada <= Tiempo && !proceso.Ejecutado)
                 {
@@ -43,48 +42,48 @@ namespace Taller1.FIFO
                     proceso.Ejecutado = true;
                     Tiempo += proceso.Rafaga;
                 }
-                else
+                else if (!proceso.Ejecutado)
                 {
                     Tiempo++;
                 }
             }
         }
+
         public void PrintModels()
         {
-            this.Run();
-            foreach (ProcessModel proceso in Procesos)
+            Run();
+            foreach (var proceso in Procesos)
             {
                 System.Console.WriteLine($"Proceso: {proceso.Proceso}, Rafaga: {proceso.Rafaga}, Llegada: {proceso.Llegada}, Comienzo: {proceso.Comienzo}, Finalizacion: {proceso.Finalizacion}");
             }
         }
 
-        public void Tiempos()
+        private void CalcularTiempos()
         {
-            foreach (ProcessModel proceso in Procesos)
+            foreach (var proceso in Procesos)
             {
                 proceso.TiempoEspera = proceso.Comienzo - proceso.Llegada;
                 proceso.TiempoSistema = proceso.Finalizacion - proceso.Llegada;
             }
-            PromedioTiempoEspera = Procesos.Sum(proceso => proceso.TiempoEspera) / (double)Procesos.Count;
-            PromedioTiempoSistema = Procesos.Sum(proceso => proceso.TiempoSistema) / (double)Procesos.Count;
+            PromedioTiempoEspera = Procesos.Average(proceso => proceso.TiempoEspera);
+            PromedioTiempoSistema = Procesos.Average(proceso => proceso.TiempoSistema);
         }
 
         public void PrintTiempos()
         {
-            this.Tiempos();
-            foreach (ProcessModel proceso in Procesos)
+            CalcularTiempos();
+            foreach (var proceso in Procesos)
             {
                 System.Console.WriteLine($"Proceso: {proceso.Proceso}, Tiempo de espera: {proceso.TiempoEspera}, Tiempo de sistema: {proceso.TiempoSistema}");
             }
             System.Console.WriteLine($"Promedio de tiempo de espera: {PromedioTiempoEspera:F2}");
             System.Console.WriteLine($"Promedio de tiempo de sistema: {PromedioTiempoSistema:F2}");
         }
-        
-         public PlotModel GeneratePlotModel()
+
+        public PlotModel GeneratePlotModel()
         {
             var plotModelGenerator = new PlotModelGenerator();
             return plotModelGenerator.CreatePlotModel(Procesos, Tiempo);
         }
-        
     }
 }
