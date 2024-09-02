@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Taller1.FIFO.Model;
+using OxyPlot;
+
 
 namespace Taller1.FIFO
 {
@@ -74,6 +76,12 @@ namespace Taller1.FIFO
             }
             System.Console.WriteLine($"Promedio de tiempo de espera: {PromedioTiempoEspera:F2}");
             System.Console.WriteLine($"Promedio de tiempo de sistema: {PromedioTiempoSistema:F2}");
+        }
+        
+         public PlotModel GeneratePlotModel()
+        {
+            var plotModelGenerator = new PlotModelGenerator();
+            return plotModelGenerator.CreatePlotModel(Procesos, Tiempo);
         }
         
     }

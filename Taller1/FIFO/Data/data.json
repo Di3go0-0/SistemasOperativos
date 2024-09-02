@@ -2,17 +2,17 @@
     {
         "Proceso": "A",
         "Rafaga" : 3,
-        "Llegada": 1
+        "Llegada": 0
     },
     {
         "Proceso": "B",
         "Rafaga" : 2,
-        "Llegada": 2
+        "Llegada": 1
     },
     {
         "Proceso": "C",
         "Rafaga" : 1,
-        "Llegada": 3
+        "Llegada": 2
     },
     {
         "Proceso": "D",
@@ -48,5 +48,10 @@
         "Proceso": "J",
         "Rafaga" : 10,
         "Llegada": 9
+    },
+    {
+        "Proceso": "K",
+        "Rafaga" : 11,
+        "Llegada": 10
     }
 ]

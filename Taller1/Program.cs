@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using Taller1.Helpers;
 using Taller1.FIFO;
 using Taller1.FIFO.Model;
 using OxyPlot;
 using OxyPlot.SkiaSharp;
-
 
 namespace SO
 {
@@ -29,9 +29,8 @@ namespace SO
             Console.WriteLine("Tiempos");
             fifo.PrintTiempos();
 
-            // Crear y guardar la gráfica
-            var plotModelGenerator = new PlotModelGenerator();
-            var plotModel = plotModelGenerator.CreatePlotModel(fifoData);
+            // Crear y guardar la gráfica usando el nuevo método en FIFO
+            var plotModel = fifo.GeneratePlotModel();
 
             using (var stream = File.Create("fifo_plot.png"))
             {       
