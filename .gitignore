@@ -2,6 +2,7 @@
 bin/
 obj/
 
+# Ignore vscode files
 .vscode/
 
 # Ignore NuGet packages
