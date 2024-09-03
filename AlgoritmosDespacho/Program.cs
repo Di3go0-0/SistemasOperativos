@@ -10,8 +10,8 @@ namespace SO
     {
         public static void Main(string[] args)
         {
-            ObtainData obtainData = new ObtainData(AlgorithmType.Fifo);
-            List<ProcessModel> fifoData = obtainData.GetFifoData() ?? new List<ProcessModel>();
+            ObtainData obtainData = new();
+            List<ProcessModel> fifoData = obtainData.GetFifoData() ?? [];
 
             FIFO fifo = new();
             fifo.LoadProcesos(fifoData);
