@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OxyPlot;
+using Taller.Helpers;
 using Taller.Model;
 
 namespace Taller.Prioridad
@@ -68,25 +69,14 @@ namespace Taller.Prioridad
         public void CreateIMG()
         {
             var plotModel = this.GeneratePlotModel();
-            using (var stream = System.IO.File.Create("IMG/prioridad_plot.png"))
-            {
-                var pngExporter = new OxyPlot.SkiaSharp.PngExporter { Width = 800, Height = 400 };
-                pngExporter.Export(plotModel, stream);
-            }
-            Console.WriteLine("Gráfica generada y guardada como prioridad_plot.png");
-        }
-        private void PrintTimes()
-        {
-            Console.WriteLine("Procesos:");
-            Console.WriteLine("Tiempo promedio de espera: " + PromedioTiempoEspera);
-            Console.WriteLine("Tiempo promedio de sistema: " + PromedioTiempoSistema);
+            var imgGenerator = new ImageGenerator();
+            imgGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/prioridad");
         }
         public void Run()
         {
             this.RunProcess();
             this.CalcularTiempos();
             this.CreateIMG();
-            this.PrintTimes();
         }
 
     }
