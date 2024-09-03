@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Taller1.FIFO.Model;
+using System;
 using Taller1.Model;
 using OxyPlot;
 
@@ -13,7 +13,7 @@ namespace Taller1.FIFO
         private double PromedioTiempoEspera { get; set; } = 0;
         private double PromedioTiempoSistema { get; set; } = 0;
 
-        public void AddProceso(string proceso, int rafaga, int llegada)
+        private void AddProceso(string proceso, int rafaga, int llegada)
         {
             Procesos.Add(new ProcessModel(proceso, rafaga, llegada));
         }
@@ -31,7 +31,7 @@ namespace Taller1.FIFO
             return Procesos;
         }
 
-        public void Run()
+        public void RunProcess()
         {
             // Ordenamos los procesos por el tiempo de llegada
             var procesosOrdenados = Procesos.OrderBy(p => p.Llegada).ToList();
@@ -53,8 +53,6 @@ namespace Taller1.FIFO
                 Tiempo += proceso.Rafaga;
             }
         }
-
-
         private void CalcularTiempos()
         {
             foreach (var proceso in Procesos)
@@ -65,21 +63,27 @@ namespace Taller1.FIFO
             PromedioTiempoEspera = Procesos.Average(proceso => proceso.TiempoEspera);
             PromedioTiempoSistema = Procesos.Average(proceso => proceso.TiempoSistema);
         }
-        public PlotModel GeneratePlotModel()
+        
+        private PlotModel GeneratePlotModel()
         {
             var plotModelGenerator = new PlotModelGenerator();
-            return plotModelGenerator.CreatePlotModel(Procesos, Tiempo);
+            return plotModelGenerator.CreatePlotFIFOModel(Procesos, Tiempo);
         }
-
-        public void PrintTiempos()
+        public void CreateIMG()
         {
-            CalcularTiempos();
-            foreach (var proceso in Procesos)
+            var plotModel = this.GeneratePlotModel();
+            using (var stream = System.IO.File.Create("IMG/fifo_plot.png"))
             {
-                System.Console.WriteLine($"Proceso: {proceso.Proceso}, Tiempo de espera: {proceso.TiempoEspera}, Tiempo de sistema: {proceso.TiempoSistema}");
+                var pngExporter = new OxyPlot.SkiaSharp.PngExporter { Width = 600, Height = 400 };
+                pngExporter.Export(plotModel, stream);
             }
-            System.Console.WriteLine($"Promedio de tiempo de espera: {PromedioTiempoEspera:F2}");
-            System.Console.WriteLine($"Promedio de tiempo de sistema: {PromedioTiempoSistema:F2}");
+            Console.WriteLine("Gráfica generada y guardada como fifo_plot.png");
+        }
+        public void Run()
+        {
+            this.RunProcess();
+            this.CalcularTiempos();
+            this.CreateIMG();
         }
 
     }
