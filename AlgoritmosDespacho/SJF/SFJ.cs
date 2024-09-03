@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using OxyPlot;
 using Taller.Model;
+using Taller.Helpers;
 
 namespace Taller.SJF
 {
@@ -66,30 +67,18 @@ namespace Taller.SJF
             var plotModelGenerator = new PlotModelGenerator();
             return plotModelGenerator.CreatePlotSJFModel(Procesos, Tiempo);
         }
-
         public void CreateIMG()
         {
-            var plotModel = this.GeneratePlotModel();
-            using (var stream = System.IO.File.Create("IMG/sjf_plot.png"))
-            {
-                var pngExporter = new OxyPlot.SkiaSharp.PngExporter { Width = 800, Height = 400 };
-                pngExporter.Export(plotModel, stream);
-            }
-            Console.WriteLine("Gráfica generada y guardada como sjf_plot.png");
-
+            var plotModel = GeneratePlotModel();
+            var imgGenerator = new ImageGenerator();
+            imgGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/sjf");
         }
-        public void PrintTimes()
-        {
-            Console.WriteLine("Procesos:");
-            Console.WriteLine("Tiempo promedio de espera: " + PromedioTiempoEspera);
-            Console.WriteLine("Tiempo promedio de sistema: " + PromedioTiempoSistema);
-        }
+        
         public void Run()
         {
             this.RunProcess();
             this.CalcularTiempos();
             this.CreateIMG();
-            this.PrintTimes();
         }
 
     }
