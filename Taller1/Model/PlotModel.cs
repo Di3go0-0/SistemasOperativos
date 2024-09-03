@@ -105,5 +105,53 @@ namespace Taller1.Model
 
             return plotModel;
         }
+        public PlotModel CreatePlotPrioridadModel(List<ProcessModel> prioridad, int tiempoTotal)
+        {
+            var plotModel = new PlotModel { Title = "Prioridad Process Execution", Background = OxyColors.White };
+
+            // Configurar el eje X (Tiempo)
+            var xAxis = new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = "Tiempo",
+                Minimum = 0,
+                Maximum = tiempoTotal
+            };
+            plotModel.Axes.Add(xAxis);
+
+            // Configurar el eje Y (Procesos)
+            var yAxis = new CategoryAxis
+            {
+                Position = AxisPosition.Left,
+                Title = "Procesos"
+            };
+
+            // Añadir los nombres de los procesos al eje Y
+            foreach (var proceso in prioridad)
+            {
+                yAxis.Labels.Add(proceso.Proceso);
+            }
+            plotModel.Axes.Add(yAxis);
+
+            // Crear una serie de líneas para cada proceso
+            foreach (var proceso in prioridad)
+            {
+                var lineSeries = new LineSeries
+                {
+                    Title = proceso.Proceso,
+                    MarkerType = MarkerType.None,
+                    Color = OxyColors.Red,
+                    StrokeThickness = 3 // Línea en negrilla
+                };
+
+                // Añadir los puntos de llegada y finalización basados en la ráfaga
+                lineSeries.Points.Add(new DataPoint(proceso.Comienzo, prioridad.IndexOf(proceso)));
+                lineSeries.Points.Add(new DataPoint(proceso.Comienzo + proceso.Rafaga, prioridad.IndexOf(proceso)));
+
+                plotModel.Series.Add(lineSeries);
+            }
+
+            return plotModel;
+        }
     }
 }
