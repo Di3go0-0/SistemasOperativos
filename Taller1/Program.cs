@@ -3,6 +3,7 @@ using Taller1.Helpers;
 using Taller1.FIFO;
 using Taller1.SJF;
 using Taller1.Model;
+using Taller1.Prioridad;
 namespace SO
 {
     public class Program
@@ -19,6 +20,10 @@ namespace SO
             SFJ sjf = new();
             sjf.LoadProcesos(fifoData);
             sjf.Run();
+
+            Prioridad prioridad = new();
+            prioridad.LoadProcesos(fifoData);
+            prioridad.Run();
 
         }
     }
