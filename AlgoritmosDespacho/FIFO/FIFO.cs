@@ -74,16 +74,23 @@ namespace Taller.FIFO
             var plotModel = this.GeneratePlotModel();
             using (var stream = System.IO.File.Create("IMG/fifo_plot.png"))
             {
-                var pngExporter = new OxyPlot.SkiaSharp.PngExporter { Width = 600, Height = 400 };
+                var pngExporter = new OxyPlot.SkiaSharp.PngExporter { Width = 800, Height = 400 };
                 pngExporter.Export(plotModel, stream);
             }
             Console.WriteLine("Gráfica generada y guardada como fifo_plot.png");
+        }
+
+        private void PrintTimes(){
+            Console.WriteLine("FIFO");
+            Console.WriteLine("Tiempo promedio de espera: " + PromedioTiempoEspera);
+            Console.WriteLine("Tiempo promedio de sistema: " + PromedioTiempoSistema);
         }
         public void Run()
         {
             this.RunProcess();
             this.CalcularTiempos();
             this.CreateIMG();
+            this.PrintTimes();
         }
 
     }
