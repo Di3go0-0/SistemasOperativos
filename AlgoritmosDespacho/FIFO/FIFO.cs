@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using Taller1.Model;
+using Taller.Model;
 using OxyPlot;
 
-namespace Taller1.FIFO
+namespace Taller.FIFO
 {
     public class FIFO
     {
