@@ -1,4 +1,4 @@
-namespace Taller1.Model
+namespace Taller.Model
 {
     public class ProcessModel
     {

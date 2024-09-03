@@ -3,7 +3,7 @@ using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Collections.Generic;
 
-namespace Taller1.Model
+namespace Taller.Model
 {
     public class PlotModelGenerator
     {
