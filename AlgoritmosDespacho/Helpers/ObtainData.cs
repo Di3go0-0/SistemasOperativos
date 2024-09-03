@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
-using Taller1.Model;
+using Taller.Model;
 
-namespace Taller1.Helpers
+namespace Taller.Helpers
 {
     public enum AlgorithmType
     {
