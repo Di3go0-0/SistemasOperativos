@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using OxyPlot;
-using Taller1.Model;
+using Taller.Model;
 
-namespace Taller1.SJF
+namespace Taller.SJF
 {
     public class SFJ
     {
