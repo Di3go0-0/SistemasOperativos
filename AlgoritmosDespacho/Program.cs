@@ -1,9 +1,9 @@
 ﻿
-using Taller1.Helpers;
-using Taller1.FIFO;
-using Taller1.SJF;
-using Taller1.Model;
-using Taller1.Prioridad;
+using Taller.Helpers;
+using Taller.FIFO;
+using Taller.SJF;
+using Taller.Model;
+using Taller.Prioridad;
 namespace SO
 {
     public class Program
