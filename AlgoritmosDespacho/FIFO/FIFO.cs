@@ -3,6 +3,7 @@ using System.Linq;
 using System;
 using Taller.Model;
 using OxyPlot;
+using Taller.Helpers;
 
 namespace Taller.FIFO
 {
@@ -69,28 +70,17 @@ namespace Taller.FIFO
             var plotModelGenerator = new PlotModelGenerator();
             return plotModelGenerator.CreatePlotFIFOModel(Procesos, Tiempo);
         }
-        public void CreateIMG()
+        private void CreateIMG()
         {
             var plotModel = this.GeneratePlotModel();
-            using (var stream = System.IO.File.Create("IMG/fifo_plot.png"))
-            {
-                var pngExporter = new OxyPlot.SkiaSharp.PngExporter { Width = 800, Height = 400 };
-                pngExporter.Export(plotModel, stream);
-            }
-            Console.WriteLine("Gráfica generada y guardada como fifo_plot.png");
-        }
-
-        private void PrintTimes(){
-            Console.WriteLine("FIFO");
-            Console.WriteLine("Tiempo promedio de espera: " + PromedioTiempoEspera);
-            Console.WriteLine("Tiempo promedio de sistema: " + PromedioTiempoSistema);
+            var imageGenerator = new ImageGenerator();
+            imageGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/fifo"); 
         }
         public void Run()
         {
             this.RunProcess();
             this.CalcularTiempos();
             this.CreateIMG();
-            this.PrintTimes();
         }
 
     }
