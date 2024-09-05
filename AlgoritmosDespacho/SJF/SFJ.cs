@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using OxyPlot;
 using Taller.Model;
 using Taller.Helpers;
@@ -14,7 +13,6 @@ namespace Taller.SJF
         private int Tiempo { get; set; } = 0;
         private double PromedioTiempoEspera { get; set; } = 0;
         private double PromedioTiempoSistema { get; set; } = 0;
-
 
         private void AddProceso(string proceso, int rafaga, int llegada)
         {
@@ -33,21 +31,47 @@ namespace Taller.SJF
         {
             return Procesos;
         }
+
         public void RunProcess()
         {
-            var procesosOrdenados = Procesos.OrderBy(p => p.Rafaga).ToList();
-            foreach (var proceso in procesosOrdenados)
+            var procesosPendientes = new List<ProcessModel>(Procesos);
+            var procesosEjecutados = new List<ProcessModel>();
+
+            while (procesosPendientes.Any())
             {
-                if (Tiempo < proceso.Llegada)
+                // Filtramos procesos que ya han llegado y ordenamos por ráfaga
+                var procesosDisponibles = procesosPendientes
+                    .Where(p => p.Llegada <= Tiempo)
+                    .OrderBy(p => p.Rafaga)
+                    .ToList();
+
+                if (!procesosDisponibles.Any())
                 {
-                    Tiempo = proceso.Llegada;
+                    // Si no hay procesos disponibles, avanzamos el tiempo al siguiente proceso
+                    Tiempo = procesosPendientes.Min(p => p.Llegada);
+                    continue;
                 }
-                proceso.Comienzo = Tiempo;
-                proceso.Finalizacion = Tiempo + proceso.Rafaga;
-                proceso.Ejecutado = true;
-                Tiempo += proceso.Rafaga;
+
+                var procesoActual = procesosDisponibles.First();
+                procesosPendientes.Remove(procesoActual);
+
+                // Establecemos los tiempos de comienzo y finalización
+                procesoActual.Comienzo = Tiempo;
+                procesoActual.Finalizacion = Tiempo + procesoActual.Rafaga;
+                procesoActual.Ejecutado = true;
+
+                // Avanzamos el tiempo en función de la ráfaga del proceso actual
+                Tiempo += procesoActual.Rafaga;
+                procesosEjecutados.Add(procesoActual);
             }
+            
+            procesosEjecutados = procesosEjecutados.OrderBy(p => p.Proceso).ToList();
+
+
+            Procesos = procesosEjecutados;
+            
         }
+
 
         private void CalcularTiempos()
         {
@@ -62,24 +86,31 @@ namespace Taller.SJF
             PromedioTiempoEspera /= Procesos.Count;
             PromedioTiempoSistema /= Procesos.Count;
         }
+
         private PlotModel GeneratePlotModel()
         {
             var plotModelGenerator = new PlotModelGenerator();
             return plotModelGenerator.CreatePlotSJFModel(Procesos, Tiempo);
         }
+
         public void CreateIMG()
         {
             var plotModel = GeneratePlotModel();
             var imgGenerator = new ImageGenerator();
-            imgGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/sjf");
+            imgGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/sfj");
         }
-        
+
         public void Run()
         {
             this.RunProcess();
             this.CalcularTiempos();
+            Console.WriteLine("SFJ");
+            for (int i = 0; i < Procesos.Count; i++)
+            {
+                var proceso = Procesos[i];
+                Console.WriteLine($"Proceso: {proceso.Proceso}, Tiempo de llegada: {proceso.Llegada}, Tiempo de finalización: {proceso.Finalizacion}, Tiempo de inicio: {proceso.Comienzo}, Tiempo de espera: {proceso.TiempoEspera}, Tiempo de sistema: {proceso.TiempoSistema}");
+            }
             this.CreateIMG();
         }
-
     }
 }
