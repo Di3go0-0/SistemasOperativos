@@ -53,7 +53,11 @@ namespace Taller.FIFO
                 // Avanzamos el tiempo según la ráfaga del proceso
                 Tiempo += proceso.Rafaga;
             }
+
+            // Calcular los tiempos de espera y sistema una vez que todos los procesos han sido ejecutados
+            CalcularTiempos();
         }
+
         private void CalcularTiempos()
         {
             foreach (var proceso in Procesos)
@@ -64,24 +68,30 @@ namespace Taller.FIFO
             PromedioTiempoEspera = Procesos.Average(proceso => proceso.TiempoEspera);
             PromedioTiempoSistema = Procesos.Average(proceso => proceso.TiempoSistema);
         }
-        
+
         private PlotModel GeneratePlotModel()
         {
             var plotModelGenerator = new PlotModelGenerator();
             return plotModelGenerator.CreatePlotFIFOModel(Procesos, Tiempo);
         }
+
         private void CreateIMG()
         {
             var plotModel = this.GeneratePlotModel();
             var imageGenerator = new ImageGenerator();
-            imageGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/fifo"); 
+            imageGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/fifo");
         }
+
         public void Run()
         {
             this.RunProcess();
-            this.CalcularTiempos();
             this.CreateIMG();
+            Console.WriteLine("FIFO");
+            for (int i = 0; i < Procesos.Count; i++)
+            {
+                var proceso = Procesos[i];
+                Console.WriteLine($"Proceso: {proceso.Proceso}, Tiempo de llegada: {proceso.Llegada}, Tiempo de finalización: {proceso.Finalizacion}, Tiempo de inicio: {proceso.Comienzo}, Tiempo de espera: {proceso.TiempoEspera}, Tiempo de sistema: {proceso.TiempoSistema}");
+            }
         }
-
     }
 }
