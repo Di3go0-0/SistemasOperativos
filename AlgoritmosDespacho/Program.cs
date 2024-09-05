@@ -11,18 +11,18 @@ namespace SO
         public static void Main(string[] args)
         {
             ObtainData obtainData = new();
-            List<ProcessModel> fifoData = obtainData.GetFifoData() ?? [];
+            List<ProcessModel> Data = obtainData.GetData() ?? [];
 
             FIFO fifo = new();
-            fifo.LoadProcesos(fifoData);
+            fifo.LoadProcesos(Data);
             fifo.Run();
 
             SFJ sjf = new();
-            sjf.LoadProcesos(fifoData);
+            sjf.LoadProcesos(Data);
             sjf.Run();
 
             Prioridad prioridad = new();
-            prioridad.LoadProcesos(fifoData);
+            prioridad.LoadProcesos(Data);
             prioridad.Run();
 
         }
