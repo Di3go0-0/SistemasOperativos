@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using OxyPlot;
 using Taller.Helpers;
 using Taller.Model;
@@ -19,6 +18,7 @@ namespace Taller.Prioridad
         {
             Procesos.Add(new ProcessModel(proceso, rafaga, llegada, prioridad));
         }
+
         public void LoadProcesos(List<ProcessModel> procesos)
         {
             foreach (var proceso in procesos)
@@ -26,29 +26,47 @@ namespace Taller.Prioridad
                 AddProceso(proceso.Proceso, proceso.Rafaga, proceso.Llegada, proceso.Prioridad);
             }
         }
+
         public void RunProcess()
         {
-            // Ordenamos los procesos primero por prioridad (menor prioridad numérica = mayor prioridad) 
-            // y luego por el tiempo de llegada para que los procesos que lleguen antes se ejecuten primero si tienen la misma prioridad.
-            var procesosOrdenados = Procesos.OrderBy(p => p.Prioridad).ThenBy(p => p.Llegada).ToList();
+            // Lista temporal para guardar los procesos no ejecutados
+            List<ProcessModel> procesosNoEjecutados = new List<ProcessModel>(Procesos);
 
-            foreach (var proceso in procesosOrdenados)
+            // Mientras haya procesos por ejecutar
+            while (procesosNoEjecutados.Count > 0)
             {
-                // Si el proceso aún no ha llegado, el tiempo debe avanzar hasta su llegada
-                if (Tiempo < proceso.Llegada)
+                // Filtrar los procesos que han llegado hasta el tiempo actual
+                var procesosValidos = procesosNoEjecutados
+                    .Where(p => p.Llegada <= Tiempo)
+                    .OrderBy(p => p.Prioridad)  // Ordenar por prioridad
+                    .ThenBy(p => p.Llegada)     // Si tienen la misma prioridad, ordenar por tiempo de llegada
+                    .ToList();
+
+                if (procesosValidos.Count == 0)
                 {
-                    Tiempo = proceso.Llegada;
+                    // Si no hay procesos disponibles para ejecutar, avanzar el tiempo
+                    Tiempo++;
+                    continue;
                 }
 
-                // Una vez que el proceso puede empezar, actualizamos sus tiempos
-                proceso.Comienzo = Tiempo;
-                proceso.Finalizacion = Tiempo + proceso.Rafaga;
-                proceso.Ejecutado = true;
+                // Seleccionar el proceso con mayor prioridad
+                var procesoAEjecutar = procesosValidos.First();
 
-                // Avanzamos el tiempo según la ráfaga del proceso
-                Tiempo += proceso.Rafaga;
+                // Registrar el tiempo de comienzo y de finalización del proceso
+                procesoAEjecutar.Comienzo = Tiempo;
+                procesoAEjecutar.Finalizacion = Tiempo + procesoAEjecutar.Rafaga;
+
+                // Avanzar el tiempo según la ráfaga del proceso ejecutado
+                Tiempo += procesoAEjecutar.Rafaga;
+
+                // Marcar el proceso como ejecutado
+                procesoAEjecutar.Ejecutado = true;
+
+                // Remover el proceso ejecutado de la lista de procesos no ejecutados
+                procesosNoEjecutados.Remove(procesoAEjecutar);
             }
         }
+
 
         private void CalcularTiempos()
         {
@@ -66,18 +84,25 @@ namespace Taller.Prioridad
             var plotModelGenerator = new PlotModelGenerator();
             return plotModelGenerator.CreatePlotPrioridadModel(Procesos, Tiempo);
         }
+
         public void CreateIMG()
         {
-            var plotModel = this.GeneratePlotModel();
+            var plotModel = GeneratePlotModel();
             var imgGenerator = new ImageGenerator();
             imgGenerator.GenerateImage(plotModel, Procesos, PromedioTiempoEspera, PromedioTiempoSistema, "IMG/prioridad");
         }
+
         public void Run()
         {
             this.RunProcess();
             this.CalcularTiempos();
             this.CreateIMG();
+            Console.WriteLine("Prioridad");
+            for (int i = 0; i < Procesos.Count; i++)
+            {
+                var proceso = Procesos[i];
+                Console.WriteLine($"Proceso: {proceso.Proceso}, Tiempo de llegada: {proceso.Llegada}, Tiempo de finalización: {proceso.Finalizacion}, Tiempo de inicio: {proceso.Comienzo}, Tiempo de espera: {proceso.TiempoEspera}, Tiempo de sistema: {proceso.TiempoSistema}");
+            }
         }
-
     }
 }
