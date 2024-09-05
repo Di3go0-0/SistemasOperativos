@@ -26,6 +26,7 @@ namespace Taller.Model
             Proceso = proceso;
             Rafaga = rafaga;
             Llegada = llegada;
+            Prioridad = prioridad;
         }
     }
 }
