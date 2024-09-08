@@ -91,9 +91,9 @@
             // 
             // panel2
             // 
-            panel2.Location = new Point(946, 316);
+            panel2.Location = new Point(963, 273);
             panel2.Name = "panel2";
-            panel2.Size = new Size(446, 319);
+            panel2.Size = new Size(429, 362);
             panel2.TabIndex = 8;
             panel2.Paint += panel2_Paint;
             // 

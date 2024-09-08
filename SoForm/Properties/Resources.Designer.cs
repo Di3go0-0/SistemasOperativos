@@ -63,21 +63,21 @@ namespace SoForm.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap descargar__2_ {
-            get {
-                object obj = ResourceManager.GetObject("descargar (2)", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
+        // internal static System.Drawing.Bitmap descargar__2_ {
+        //     get {
+        //         object obj = ResourceManager.GetObject("descargar (2)", resourceCulture);
+        //         return ((System.Drawing.Bitmap)(obj));
+        //     }
+        // }
         
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap prioridad_plot {
-            get {
-                object obj = ResourceManager.GetObject("prioridad_plot", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
+        // internal static System.Drawing.Bitmap prioridad_plot {
+        //     get {
+        //         object obj = ResourceManager.GetObject("prioridad_plot", resourceCulture);
+        //         return ((System.Drawing.Bitmap)(obj));
+        //     }
+        // }
     }
 }

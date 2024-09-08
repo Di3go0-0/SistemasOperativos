@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using SoForm.Panels;
 using SoForm.Models;
 using SoForm.Algorithms;
+using SoForm.Helpers;
 
 namespace SoForm
 {
@@ -16,9 +17,13 @@ namespace SoForm
         {
             InitializeComponent();
             this.Load += new EventHandler(HomeForm_Load);
+            this.MaximumSize = this.Size;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Simulador de Algoritmos de Planificación de Procesos";
         }
 
-        private void HomeForm_Load(object sender, EventArgs e)
+        private void HomeForm_Load(object? sender, EventArgs e)
         {
         }
 
@@ -40,6 +45,7 @@ namespace SoForm
         {
             ShowForm(FormType.FIFO);
             ShowPanel2(FormType.FIFO);
+
         }
 
         private void DatosButton_Click(object sender, EventArgs e)
@@ -59,76 +65,21 @@ namespace SoForm
             ShowForm(FormType.Prioridad);
             ShowPanel2(FormType.Prioridad);
         }
+
         private void ShowPanel2(FormType formType)
         {
-            switch (formType)
-            {
-                case FormType.FIFO:
-                    FIFO fifo = new FIFO();
-                    fifo.RunProcess();
-                    fifo.CalcularTiempos();
-                    processModels = fifo.Procesos;
-                    break;
-                case FormType.SJF:
-                    SJF sjf = new SJF();
-                    sjf.RunProcess();
-                    sjf.CalcularTiempos();
-                    processModels = sjf.Procesos;
-                    break;
-                case FormType.Prioridad:
-                    Prioridad prioridad = new Prioridad();
-                    prioridad.RunProcess();
-                    prioridad.CalcularTiempos();
-                    processModels = prioridad.Procesos;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(formType), formType, null);
-            }
-
-            panel2.Controls.Clear();
+            processModels = TimeCalculator.CalculateTimes(formType);
             Times window = new Times(processModels);
-
-            // Configurar el formulario para que se comporte como un control
-            window.TopLevel = false;
-            window.FormBorderStyle = FormBorderStyle.None;
-            window.Dock = DockStyle.Fill;
-
-            // Agregar el formulario al panel2
-            panel2.Controls.Add(window);
-            panel2.Tag = window;
-
-            // Mostrar el formulario
-            window.Show();
+            PanelManager.ShowFormInPanel(window, panel2);
         }
+
         private void ShowForm(FormType formType)
         {
             try
             {
-                // Limpiar el panel de controles existentes
                 panel1.Controls.Clear();
-
-                // Verificar si ya hay un formulario ListProcess en el panel
-                var existingForm = panel1.Controls.OfType<ListProcess>().FirstOrDefault();
-                if (existingForm == null)
-                {
-                    Form window = CreateForm(formType);
-
-                    // Configurar el formulario para que se comporte como un control
-                    window.TopLevel = false;
-                    window.FormBorderStyle = FormBorderStyle.None;
-                    window.Dock = DockStyle.Fill;
-
-                    // Agregar el formulario al panel1
-                    panel1.Controls.Add(window);
-                    panel1.Tag = window;
-
-                    // Mostrar el formulario
-                    window.Show();
-                }
-                else
-                {
-                    MessageBox.Show("El formulario ListProcess ya está en el panel.");
-                }
+                Form window = CreateForm(formType);
+                PanelManager.ShowFormInPanel(window, panel1);
             }
             catch (Exception ex)
             {
@@ -155,20 +106,10 @@ namespace SoForm
 
         private void panel2_Paint(object sender, PaintEventArgs e)
         {
-
         }
 
         private void HomeForm_Load_1(object sender, EventArgs e)
         {
-
-        }
-
-        private enum FormType
-        {
-            FIFO,
-            SJF,
-            Prioridad,
-            ListProcess
         }
     }
 }

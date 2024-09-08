@@ -47,7 +47,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(428, 272);
+            dataGridView1.Size = new Size(429, 315);
             dataGridView1.TabIndex = 0;
             // 
             // Proceso
@@ -86,7 +86,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(428, 272);
+            ClientSize = new Size(429, 315);
             Controls.Add(dataGridView1);
             Name = "Times";
             Text = "Times";
