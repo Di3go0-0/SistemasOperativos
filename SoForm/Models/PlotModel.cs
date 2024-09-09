@@ -25,12 +25,13 @@ namespace SoForm.Models
         {
             var plotModel = new PlotModel { Title = title, Background = OxyColors.White };
 
-            // Configurar los ejes
+                        // Configurar los ejes
             ConfigureAxes(plotModel, tiempoTotal, processData);
-
+            
             // Crear una serie de líneas para cada proceso
             foreach (var proceso in processData)
             {
+                // Línea continua desde el comienzo hasta el final basado en la ráfaga
                 var lineSeries = new LineSeries
                 {
                     Title = proceso.Proceso,
@@ -38,14 +39,29 @@ namespace SoForm.Models
                     Color = lineColor,
                     StrokeThickness = 3 // Línea en negrilla
                 };
-
-                // Añadir los puntos de llegada y finalización basados en la ráfaga
+            
+                // Añadir los puntos de comienzo y finalización basados en la ráfaga
                 lineSeries.Points.Add(new DataPoint(proceso.Comienzo, processData.IndexOf(proceso)));
                 lineSeries.Points.Add(new DataPoint(proceso.Comienzo + proceso.Rafaga, processData.IndexOf(proceso)));
-
+            
                 plotModel.Series.Add(lineSeries);
+            
+                // Línea punteada desde el tiempo de llegada hasta el comienzo
+                var dashedLineSeries = new LineSeries
+                {
+                    MarkerType = MarkerType.None,
+                    Color = lineColor,
+                    StrokeThickness = 1, // Línea no en negrilla
+                    LineStyle = LineStyle.Dash // Estilo de línea punteada
+                };
+            
+                // Añadir los puntos de llegada y comienzo
+                dashedLineSeries.Points.Add(new DataPoint(proceso.Llegada, processData.IndexOf(proceso)));
+                dashedLineSeries.Points.Add(new DataPoint(proceso.Comienzo, processData.IndexOf(proceso)));
+            
+                plotModel.Series.Add(dashedLineSeries);
             }
-
+            
             return plotModel;
         }
 
