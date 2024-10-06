@@ -46,7 +46,7 @@
             // 
             // FIFOButton
             // 
-            FIFOButton.BackColor = Color.Transparent;
+            FIFOButton.BackColor = Color.Gray;
             FIFOButton.Location = new Point(1082, 77);
             FIFOButton.Name = "FIFOButton";
             FIFOButton.Size = new Size(220, 59);
@@ -57,7 +57,7 @@
             // 
             // DatosButton
             // 
-            DatosButton.BackColor = Color.Transparent;
+            DatosButton.BackColor = Color.Gray;
             DatosButton.ForeColor = SystemColors.ActiveCaptionText;
             DatosButton.Location = new Point(1082, 12);
             DatosButton.Name = "DatosButton";
@@ -69,7 +69,7 @@
             // 
             // SJF
             // 
-            SJF.BackColor = Color.Transparent;
+            SJF.BackColor = Color.Gray;
             SJF.Location = new Point(1082, 142);
             SJF.Name = "SJF";
             SJF.Size = new Size(220, 59);
@@ -80,7 +80,7 @@
             // 
             // Prioridad
             // 
-            Prioridad.BackColor = Color.Transparent;
+            Prioridad.BackColor = Color.Gray;
             Prioridad.Location = new Point(1082, 207);
             Prioridad.Name = "Prioridad";
             Prioridad.Size = new Size(220, 59);

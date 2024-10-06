@@ -25,6 +25,12 @@ namespace SO
             prioridad.LoadProcesos(Data);
             prioridad.Run();
 
+            RoundRobinFIFO roundRobinFIFO = new();
+
+            List<RoundRobinProcessModel> DataRoundRobin = obtainData.GetData().Cast<RoundRobinProcessModel>().ToList() ?? new List<RoundRobinProcessModel>();
+            roundRobinFIFO.LoadProcesos(DataRoundRobin);
+            roundRobinFIFO.Run();
+
         }
     }
 }
